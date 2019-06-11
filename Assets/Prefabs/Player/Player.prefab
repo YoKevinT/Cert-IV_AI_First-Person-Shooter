@@ -396,12 +396,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2d8173f12d0c374c9e4276efb391aaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 30
   maxReserve: 500
   maxClip: 30
   spread: 2
   recoil: 1
-  range: 10
+  range: 20
   shootRate: 0.2
   shotOrigin: {fileID: 7196184144350685751}
   bulletPrefab: {fileID: 8570418281691210860, guid: 6b7fe71cb1e05bd4c81f096c14795b57,
