@@ -5,43 +5,22 @@ using UnityEngine;
 public class Seek : SteeringBehaviour
 {
     public Transform target;
-    public float stoppingDistance;
 
-    /*
-    If you want to have 2 awakes
-    Have SteeringBehaviour this:
-    protected virtual void Awake()
-    
-    And here add:
-    protected override void Awake()
+    public override Vector3 GetForce(AI owner)
     {
-    base.Awake();
-    }
-    */
-
-    // Calculate force using target and return it
-    public override Vector3 GetForce()
-    {
+        // SET force to zero
         Vector3 force = Vector3.zero;
 
-        // Step 1. Check if we have a valid target
-        // IF target is null
-        if (target) // target != null
+        // IF target is not null
+        if (target) // shorthand for target != null
         {
-            // Step 2. Get direction we want to go
-            // SET desiredForce to target - current
+            // SET desiredForce to target - current (position)
             Vector3 desiredForce = target.position - transform.position;
-
-            // Step 3. Apply weighting to desired force
-            // IF desiredForce distance is greater than stoppingDistance
-            if (desiredForce.magnitude > stoppingDistance)
-            {
-                // SET desiredForce to restricted desiredForce (using weighting)
-                desiredForce = desiredForce.normalized * weighting;
-                // SET force to desiredForce - velocity
-                force = desiredForce - owner.Velocity;
-            }
+            // SET force to desiredForce normalized x weighting
+            force += desiredForce.normalized * weighting;
         }
+
+        // RETURN force
         return force;
     }
 }

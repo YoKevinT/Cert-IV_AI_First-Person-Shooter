@@ -5,82 +5,48 @@ using UnityEngine.AI;
 
 public class AI : MonoBehaviour
 {
-    //Variable
-    public float maxVelocity = 5f, maxDistance = 5f;
-    protected Vector3 velocity;
-    protected NavMeshAgent agent;
-    protected SteeringBehaviour[] behaviours;
+    public float maxVelocity = 15f, maxDistance = 10f;
+    public SteeringBehaviour[] behaviours;
+    public Vector3 velocity;
+    private NavMeshAgent agent;
 
-    //Properties
-    public Vector3 Velocity
+    private void Awake()
     {
-        private set { velocity = value; }
-        get { return velocity; }
-    }
-
-    void Awake()
-    {
-        // Get Nav Component
         agent = GetComponent<NavMeshAgent>();
-        // Get all SteeringBehaviours on AI
         behaviours = GetComponents<SteeringBehaviour>();
     }
 
-    void Update()
+    private void Update()
     {
-        CalculateForce();
-    }
-
-    // Calculates all forces from all behaviours
-    public virtual Vector3 CalculateForce()
-    {
-        //Pseudocode
-        // Step 1. Create a result Vector3
-        // SET force to zero
         Vector3 force = Vector3.zero;
 
-        // Step 2. Loop through all behaviours and get forces
+        // Step 1). Loop through all behaviours and get forces
         foreach (var behaviour in behaviours)
         {
-            // APPLY force to behaviour.GetForce x Weighting
-            force += behaviour.GetForce() * behaviour.weighting;
-
-            // Step 3. Limit the total force to max speed
-            // If force magnitude > maxSpeed
-            if (force.magnitude > maxVelocity)
-            {
-                // SET force to force normalized x maxSpeed
-                force = force.normalized * maxVelocity;
-                // BREAK - Exits the Loop
-                break;
-            }
+            force += behaviour.GetForce(this);
         }
 
-        // Step 4. Limit the total velocity to our max velocity if it exceeds
+        // Step 2). Apply force to velocity
         velocity += force * Time.deltaTime;
-        // IF velocity magnitude > max velocity
+
+        // Step 3). Limit velocity to max velocity
         if (velocity.magnitude > maxVelocity)
         {
-            // SET velocity to velocity normalized x max velocity
             velocity = velocity.normalized * maxVelocity;
         }
 
-        // Step 5. Sample destination for NavMeshAgent
-        // IF velocity magnitude > 0 (velocity not zero)
+        // Step 4). Apply velocity to NavMeshAgent
         if (velocity.magnitude > 0)
         {
-            // SET pos to current (position) + velocity x delta
-            Vector3 pos = transform.position + velocity * Time.deltaTime;
+            // Position for next frame (using velocity)
+            Vector3 desiredPosition = transform.position + velocity * Time.deltaTime;
             NavMeshHit hit;
-            // IF NavMes SamplePosition within NavMesh
-            if (NavMesh.SamplePosition(pos, out hit, maxDistance, -1))
+            // Check if desired position is within the NavMesh
+            if (NavMesh.SamplePosition(desiredPosition, out hit, maxDistance, -1))
             {
-                // SET agent destination to hit position
+                // Set the agent's destination to the nav hit point
                 agent.SetDestination(hit.position);
             }
         }
-
-        // Step 6. Return force
-        return force;
     }
 }
