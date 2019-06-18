@@ -2,25 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Flee : SteeringBehaviour
+public class Flee : MonoBehaviour
 {
-    public Transform target;
-
-    public override Vector3 GetForce(AI owner)
+    // Start is called before the first frame update
+    void Start()
     {
-        // SET force to zero
-        Vector3 force = Vector3.zero;
+        
+    }
 
-        // IF target is not null
-        if (target) // shorthand for target != null
-        {
-            // SET desiredForce to target - current (position)
-            Vector3 desiredForce = target.position - transform.position;
-            // SET force to desiredForce normalized x weighting
-            force -= desiredForce.normalized * weighting;
-        }
-
-        // RETURN force
-        return force;
+    // Update is called once per frame
+    void Update()
+    {
+        
     }
 }

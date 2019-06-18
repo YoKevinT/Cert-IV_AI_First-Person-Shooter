@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 2817986373653928123}
   - component: {fileID: 2350399979431498066}
   - component: {fileID: 8665065788138040189}
-  - component: {fileID: 1548414873122313824}
+  - component: {fileID: 3175284019201511234}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -93,7 +93,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4577a769f6702534fa0f397341bb74ff, type: 2}
+  - {fileID: 2100000, guid: 6a5055ac7fec10d4ab08f3d5cdb03496, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -182,7 +182,7 @@ MonoBehaviour:
   maxDistance: 5
   behaviours: []
   velocity: {x: 0, y: 0, z: 0}
---- !u!114 &1548414873122313824
+--- !u!114 &3175284019201511234
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
